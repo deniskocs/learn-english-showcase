@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn English — Перенажать на урок</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background-color: #f6f7fb;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif;
+      color: #212529;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- NAVIGATION BAR --- */
+    .navbar-ios {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(252, 252, 253, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+    .navbar-ios h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: #212529;
+    }
+    .nav-left {
+      position: absolute;
+      left: 16px;
+      font-size: 1.3rem;
+      color: #0d6efd;
+      cursor: pointer;
+    }
+
+    /* --- WORD BLOCK --- */
+    .word-block {
+      text-align: center;
+      padding: 24px 16px 12px;
+      flex-shrink: 0;
+    }
+    .word-main {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .word-sub {
+      font-size: 0.95rem;
+      color: #6c757d;
+    }
+
+    /* --- OPTIONS GRID --- */
+    .options-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 12px;
+      padding: 0 12px 16px;
+      box-sizing: border-box;
+    }
+    .option-card {
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .option-card:active {
+      transform: scale(0.97);
+    }
+
+    /* --- MODAL OVERLAY --- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    /* --- MODAL CONTENT --- */
+    .modal-content {
+      background-color: #fff;
+      border-radius: 18px;
+      width: 85%;
+      max-width: 340px;
+      padding: 0;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      animation: pop 0.25s ease-out;
+      position: relative;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* --- MODAL HEADER --- */
+    .modal-header {
+      position: relative;
+      padding: 20px 20px 16px;
+      text-align: center;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6c757d;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      color: #212529;
+    }
+
+    .modal-close-btn:active {
+      transform: scale(0.95);
+    }
+
+    .modal-icon {
+      font-size: 4rem;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* --- MODAL BODY --- */
+    .modal-body {
+      padding: 0 20px 20px;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: #212529;
+    }
+
+    .modal-description {
+      font-size: 0.95rem;
+      color: #6c757d;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* --- CHECKBOX --- */
+    .modal-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 0;
+      border-top: 1px solid #e9ecef;
+      margin-top: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .modal-checkbox input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      accent-color: #0d6efd;
+    }
+
+    .modal-checkbox label {
+      font-size: 0.9rem;
+      color: #495057;
+      cursor: pointer;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar-ios">
+    <div class="nav-left">←</div>
+    <h1>Урок</h1>
+  </nav>
+
+  <!-- WORD BLOCK -->
+  <section class="word-block">
+    <div class="word-main">ability</div>
+    <div class="word-sub">Слово 3 из 10</div>
+  </section>
+
+  <!-- GRID -->
+  <main class="options-grid">
+    <div class="option-card">способность</div>
+    <div class="option-card">движение</div>
+    <div class="option-card">умение</div>
+    <div class="option-card">возможность</div>
+    <div class="option-card">знание</div>
+    <div class="option-card">план</div>
+    <div class="option-card">надежда</div>
+    <div class="option-card">вера</div>
+  </main>
+
+  <!-- MODAL DIALOG -->
+  <div class="modal-overlay" id="retryLessonModal">
+    <div class="modal-content">
+      <!-- HEADER WITH ICON AND CLOSE BUTTON -->
+      <div class="modal-header">
+        <button class="modal-close-btn" onclick="closeModal()">×</button>
+        <div class="modal-icon">🚀</div>
+      </div>
+
+      <!-- BODY WITH TITLE AND DESCRIPTION -->
+      <div class="modal-body">
+        <div class="modal-title">Перевод на русский</div>
+        <div class="modal-description">
+          В этом уроке вы будете изучать английские слова через перевод. Вам будет показано английское слово, и вы должны выбрать правильный русский перевод из предложенных вариантов.<br><br>
+          Чтобы слово считалось изученным, нужно дважды подряд выбрать правильный ответ. Это поможет лучше запомнить новые слова и закрепить их в памяти.
+        </div>
+
+        <!-- CHECKBOX -->
+        <div class="modal-checkbox">
+          <input type="checkbox" id="showNextTime" />
+          <label for="showNextTime">Не показывать в следующий раз</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function closeModal() {
+      document.getElementById('retryLessonModal').style.display = 'none';
+    }
+
+    // Пример: показываем модалку при клике на любую карточку
+    const cards = document.querySelectorAll('.option-card');
+    const modal = document.getElementById('retryLessonModal');
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        modal.style.display = 'flex';
+      });
+    });
+
+    // Закрытие при клике вне модалки
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
+

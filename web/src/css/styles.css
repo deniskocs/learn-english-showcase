@@ -1,0 +1,248 @@
+/* platinum: #EBE9E9 */
+/* mint cream: #F3F8F2 */
+/* steel blue: #3581B8 */
+/* macaroni and cheese: #FCB07E */
+/* alabaster: #DEE2D6 */
+
+body {
+    background-color: #F3F8F2;
+    margin: 0;
+}
+
+header {
+    background-color: #3581B8;
+    text-align: center;
+}
+
+.mainMenu {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style-type: none;
+    display: inline-block;
+}
+
+.mainMenu li {
+    float: left;
+}
+
+.mainMenu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.mainMenu li a:hover {
+    background-color: #000000;
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+}
+
+.parsed-word-line {
+    display: flex;
+    flex-direction: column;
+    border-bottom:darkblue solid 1px;
+}
+
+.word-descriptior {
+    display: flex;
+    flex-direction: row;
+}
+
+.word-descriptior .word {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 600;
+    width: 120px
+}
+
+.word-descriptior .context {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%
+}
+
+.word-descriptior .learned-button-container {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.up-arrow-image {
+    background-image: url(/images/up.png);
+}
+
+.down-arrow-image {
+    background-image: url(/images/down.png);
+}
+
+.word-descriptior .collapse-expand-button {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-size: contain;
+}
+
+.word-meaning-container {
+    display: none;
+}
+
+.parsed-word-list {
+    display: block;
+
+    width: 100%;
+    margin: 4px;
+    padding: 4px;
+}
+
+.list-element {
+    display: flex;
+    width: 100%;
+}
+
+.meaning-line-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.star {
+    background-image: url(/images/star.png);
+}
+
+.star-selected {
+    background-image: url(/images/star-selected.png);
+}
+
+.meaning-line-content .train-selector {
+    display: block;
+    width: 32;
+    height: 32;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 8px 0 0;
+    background-size: contain;
+}
+
+.meaning-line-content .description {
+    margin: 0px;
+    width: 65%;
+}
+
+.meaning-line-content .examples {
+    margin: 0px;
+    width: 30%;
+}
+
+.list-element:nth-child(odd) {
+    background-color: lightyellow;
+}
+
+.list-element:nth-child(even) {
+    background-color: lightgrey;
+}
+
+.button {
+    color: white;
+    background-color: green;
+    text-align: center;
+    margin: 4px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 4px;
+}
+
+.vocabulary-button {
+    float: right;
+    width: 80px;
+}
+
+.mark-as-trained-button {
+    float: right;
+    width: 80px;
+}
+
+.word-meaning-button {
+    width: 80px;
+}
+
+.list-element-index {
+    float: left;
+    width: 40px;
+    margin: 4px;
+    padding: 4px;
+}
+
+.list-element-text {
+    width: auto;
+    display: block;
+    float: left;
+    margin: 4px;
+    padding: 4px;
+}
+
+.list-element-info {
+    width: 100%;
+}
+
+
+.list-element-phase {
+    margin: 4px;
+    padding: 4px;
+    float: right;
+}
+
+.list-element-known {
+    float: right;
+}
+
+.list-element-learn {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.buttons-container {
+    display: flex;
+}
+
+/* Button states: loading and error */
+.btn-loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-error {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+    animation: btnshake 0.2s;
+}
+
+.btn-error-icon {
+    display: inline-block;
+    font-size: 1.1em;
+}
+
+@keyframes btnshake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "learn-english-web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --host --port 5173"
+  },
+  "devDependencies": {
+    "vite": "^6.0.11"
+  }
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Анализ файлов</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 80px;
+    }
+    .upload-area {
+      border: 2px dashed #ced4da;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      color: #6c757d;
+      transition: background-color 0.3s ease;
+    }
+    .upload-area:hover {
+      background-color: #f1f3f5;
+      cursor: pointer;
+    }
+    .file-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .file-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+    }
+    .file-list li .remove {
+      cursor: pointer;
+      color: #dc3545;
+      font-size: 1rem;
+    }
+    .context-sentence {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    .highlight {
+      background-color: #fff3cd;
+      font-weight: 600;
+    }
+    .word-row:hover {
+      background-color: #f1f3f5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Навигация -->
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand fw-bold text-primary" href="#">Learn English</a>
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="#">Словарь</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Разбор текста</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Выход</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Разбор текста</h2>
+      <p class="text-muted mb-1">Анализируйте тексты из файлов, чтобы учить слова в контексте</p>
+    </div>
+
+    <!-- Вкладки -->
+    <ul class="nav nav-tabs mb-4" id="analyzeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="text-tab" data-bs-toggle="tab" data-bs-target="#textAnalyze" type="button" role="tab">
+          Разбор текста
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="file-tab" data-bs-toggle="tab" data-bs-target="#fileAnalyze" type="button" role="tab">
+          Анализ файлов
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="record-tab" data-bs-toggle="tab" data-bs-target="#recordAnalyze" type="button" role="tab">
+          Анализ записей
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Анализ файлов -->
+      <div class="tab-pane fade show active" id="fileAnalyze" role="tabpanel">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="fw-semibold mb-3">Загрузка файлов для анализа</h5>
+
+            <!-- Зона загрузки -->
+            <div class="upload-area mb-3" onclick="document.getElementById('fileInput').click();">
+              <div class="mb-2">Перетащите сюда файлы или нажмите, чтобы выбрать</div>
+              <div class="text-muted small">Поддерживаются: .txt, .docx, .pdf (только текстовые)</div>
+              <input type="file" id="fileInput" class="d-none" multiple />
+            </div>
+
+            <!-- Список загруженных файлов -->
+            <ul class="file-list mb-3">
+              <li><span>article1.txt</span> <span class="remove">&times;</span></li>
+              <li><span>lesson_notes.docx</span> <span class="remove">&times;</span></li>
+            </ul>
+
+            <!-- Настройки анализа -->
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="minOccurrences" class="col-form-label fw-semibold">Минимум повторений слова:</label>
+              </div>
+              <div class="col-auto">
+                <select id="minOccurrences" class="form-select">
+                  <option value="1">1 раз</option>
+                  <option value="2">2 раза</option>
+                  <option value="3">3 раза</option>
+                  <option value="4">4 раза</option>
+                </select>
+              </div>
+              <div class="col-auto ms-auto">
+                <button class="btn btn-primary">Анализировать файлы</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Результаты анализа -->
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="fw-semibold mb-3">Найденные незнакомые слова</h5>
+
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th>Слово</th>
+                  <th>Контексты</th>
+                  <th class="text-end">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="word-row">
+                  <td><span class="fw-semibold">policy</span></td>
+                  <td>
+                    <div class="context-sentence">The company changed its <span class="highlight">policy</span> last year.</div>
+                    <div class="context-sentence">New <span class="highlight">policy</span> affects all employees.</div>
+                  </td>
+                  <td class="text-end">
+                    <button class="btn btn-success btn-sm">Знаю</button>
+                    <button class="btn btn-outline-primary btn-sm">Учить</button>
+                    <button class="btn btn-outline-danger btn-sm">Удалить</button>
+                  </td>
+                </tr>
+                <tr class="word-row">
+                  <td><span class="fw-semibold">expand</span></td>
+                  <td>
+                    <div class="context-sentence">The company plans to <span class="highlight">expand</span> its business abroad.</div>
+                    <div class="context-sentence">We need to <span class="highlight">expand</span> our vocabulary.</div>
+                  </td>
+                  <td class="text-end">
+                    <button class="btn btn-outline-primary btn-sm">Открыть</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Пейджинг -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-outline-primary btn-sm">&larr; Назад</button>
+              <span class="text-muted small">Страница 1 из 5</span>
+              <button class="btn btn-outline-primary btn-sm">Далее &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Заглушки для остальных вкладок -->
+      <div class="tab-pane fade" id="textAnalyze" role="tabpanel">
+        <div class="alert alert-secondary text-center py-5 mt-3 shadow-sm">
+          Раздел <strong>«Разбор текста»</strong> находится в разработке.
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="recordAnalyze" role="tabpanel">
+        <div class="alert alert-secondary text-center py-5 mt-3 shadow-sm">
+          Раздел <strong>«Анализ записей»</strong> находится в разработке.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Модалка с деталями слова -->
+  <div class="modal fade" id="wordDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">expand</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group mb-3">
+            <li class="list-group-item">
+              <div class="fw-semibold">expand (verb)</div>
+              <div class="text-muted small">To increase in size, number, or importance.</div>
+            </li>
+            <li class="list-group-item">
+              <div class="fw-semibold">expand (verb)</div>
+              <div class="text-muted small">To express something in more detail.</div>
+            </li>
+          </ul>
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-success btn-sm">Знаю</button>
+            <button class="btn btn-outline-primary btn-sm">Учить</button>
+            <button class="btn btn-outline-danger btn-sm">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-white border-top text-center py-3 mt-5">
+    <small class="text-muted">&copy; 2025 Learn English — инструмент для анализа текстов и файлов</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn English — Записи</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #f6f7fb;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif;
+      color: #212529;
+      padding-bottom: 80px;
+    }
+
+    /* --- NAVIGATION BAR --- */
+    .navbar-ios {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(252, 252, 253, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .navbar-ios h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0;
+      color: #212529;
+    }
+
+    /* --- ACTIVE RECORDING SWITCH --- */
+    .record-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 14px 18px;
+      margin: 12px 16px;
+      border-radius: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .record-toggle .label {
+      font-weight: 500;
+      color: #212529;
+    }
+
+    /* iOS switch style */
+    .switch {
+      position: relative;
+      width: 48px;
+      height: 28px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #dee2e6;
+      border-radius: 34px;
+      transition: 0.3s;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #0d6efd;
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* --- HOLD TO RECORD BUTTON --- */
+    .record-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+    .record-circle {
+      width: 80px;
+      height: 80px;
+      background-color: #dc3545;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 1.4rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(220,53,69,0.4);
+      transition: all 0.2s ease;
+    }
+    .record-circle:active {
+      transform: scale(0.9);
+      box-shadow: 0 0 20px rgba(220,53,69,0.6);
+    }
+    .record-button small {
+      margin-top: 6px;
+      color: #6c757d;
+      font-size: 0.85rem;
+    }
+
+    /* --- RECORDINGS LIST --- */
+    .record-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .record-item {
+      background: #fff;
+      margin: 10px 16px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      transition: transform 0.1s ease;
+    }
+    .record-item:active {
+      transform: scale(0.98);
+    }
+    .record-info {
+      flex: 1;
+    }
+    .record-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .record-desc {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 4px;
+    }
+    .record-time {
+      font-size: 0.8rem;
+      color: #adb5bd;
+    }
+    .delete-btn {
+      border: none;
+      background: none;
+      font-size: 1.2rem;
+      color: #dc3545;
+      padding-left: 10px;
+    }
+
+    /* --- TAB BAR --- */
+    .tabbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background-color: #fff;
+      border-top: 1px solid #dee2e6;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .tabbar button {
+      background: none;
+      border: none;
+      color: #6c757d;
+      font-size: 0.9rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .tabbar button.active {
+      color: #0d6efd;
+      font-weight: 600;
+    }
+    .tabbar-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar-ios">
+    <h1>Записи</h1>
+  </nav>
+
+  <!-- Active recording switch -->
+  <div class="record-toggle">
+    <div class="label">Активная запись</div>
+    <label class="switch">
+      <input type="checkbox" id="activeRec">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Hold-to-record button -->
+  <div class="record-button">
+    <div class="record-circle" id="holdButton">🎙</div>
+    <small>Удерживайте для записи</small>
+  </div>
+
+  <!-- Recordings list -->
+  <ul class="record-list" id="recordList">
+    <li class="record-item">
+      <div class="record-info">
+        <div class="record-title">Разговор с коллегой</div>
+        <div class="record-desc">Обсуждали встречу на понедельник</div>
+        <div class="record-time">Сегодня, 10:34</div>
+      </div>
+      <button class="delete-btn">×</button>
+    </li>
+    <li class="record-item">
+      <div class="record-info">
+        <div class="record-title">Урок по грамматике</div>
+        <div class="record-desc">Теория времен Perfect</div>
+        <div class="record-time">Вчера, 21:10</div>
+      </div>
+      <button class="delete-btn">×</button>
+    </li>
+  </ul>
+
+  <!-- Tab Bar -->
+  <nav class="tabbar">
+    <button>
+      <span class="tabbar-icon">🧠</span>
+      <small>Уроки</small>
+    </button>
+    <button>
+      <span class="tabbar-icon">📘</span>
+      <small>Словарь</small>
+    </button>
+    <button class="active">
+      <span class="tabbar-icon">🎙️</span>
+      <small>Записи</small>
+    </button>
+    <button>
+      <span class="tabbar-icon">⚙️</span>
+      <small>Настройки</small>
+    </button>
+  </nav>
+
+  <script>
+    const activeRec = document.getElementById('activeRec');
+    const holdButton = document.getElementById('holdButton');
+    const recordList = document.getElementById('recordList');
+
+    // Симуляция активации фоновой записи
+    activeRec.addEventListener('change', () => {
+      if (activeRec.checked) {
+        alert('Фоновая запись активирована');
+      } else {
+        alert('Фоновая запись выключена');
+      }
+    });
+
+    // Симуляция новой записи при удержании
+    let pressTimer;
+    holdButton.addEventListener('mousedown', () => {
+      holdButton.style.backgroundColor = '#b02a37';
+      pressTimer = setTimeout(() => {
+        // Добавляем новую запись
+        const li = document.createElement('li');
+        li.className = 'record-item';
+        li.innerHTML = `
+          <div class="record-info">
+            <div class="record-title">Новая запись</div>
+            <div class="record-desc">Отправлена на сервер</div>
+            <div class="record-time">Сейчас</div>
+          </div>
+          <button class="delete-btn">×</button>
+        `;
+        recordList.prepend(li);
+      }, 2000); // условная длительность записи
+    });
+
+    document.addEventListener('mouseup', () => {
+      holdButton.style.backgroundColor = '#dc3545';
+      clearTimeout(pressTimer);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+.DS_Store
+*.iml
+.idea/
+.vscode/
+.venv/
+venv/
+__pycache__/
+node_modules/
+dist/
+.env.local
+flutter/build/
+flutter/.dart_tool/
+flutter/android/build/
+flutter/ios/Pods/

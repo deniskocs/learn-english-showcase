@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Разбор текста</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 80px;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 200px;
+    }
+    .context-sentence {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    .highlight {
+      background-color: #fff3cd;
+      font-weight: 600;
+    }
+    .word-row:hover {
+      background-color: #f1f3f5;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #e9ecef;
+      border-radius: 20px;
+      padding: 4px 10px;
+      margin: 2px;
+      font-size: 0.85rem;
+      cursor: default;
+    }
+    .tag .remove {
+      color: #6c757d;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+    .tag-input {
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
+      padding: 6px;
+      background-color: #fff;
+      min-height: 42px;
+      cursor: text;
+    }
+    .tag-input input {
+      border: none;
+      outline: none;
+      width: 150px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Навигация -->
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand fw-bold text-primary" href="#">Learn English</a>
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link" href="#">Словарь</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">Разбор текста</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Выход</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container mt-4">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Разбор текста</h2>
+      <p class="text-muted mb-1">Анализируйте тексты, чтобы учить слова в контексте</p>
+    </div>
+
+    <!-- Внутренние вкладки -->
+    <ul class="nav nav-tabs mb-4" id="analyzeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="text-tab" data-bs-toggle="tab" data-bs-target="#textAnalyze" type="button" role="tab">
+          Разбор текста
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="file-tab" data-bs-toggle="tab" data-bs-target="#fileAnalyze" type="button" role="tab">
+          Анализ файлов
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="record-tab" data-bs-toggle="tab" data-bs-target="#recordAnalyze" type="button" role="tab">
+          Анализ записей
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Разбор текста -->
+      <div class="tab-pane fade show active" id="textAnalyze" role="tabpanel">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="textInput" class="form-label fw-semibold">Текст для анализа</label>
+              <textarea class="form-control" id="textInput" placeholder="Вставьте сюда английский текст..."></textarea>
+            </div>
+
+            <!-- Добавление тегов -->
+            <div class="mb-3">
+              <label for="tagsInput" class="form-label fw-semibold">Теги</label>
+              <div id="tagsInput" class="tag-input">
+                <!-- Пример добавленных тегов -->
+                <span class="tag">travel <span class="remove">&times;</span></span>
+                <span class="tag">business <span class="remove">&times;</span></span>
+                <input type="text" placeholder="Введите тег..." />
+              </div>
+              <div class="form-text text-muted">Теги помогут группировать и учить слова по темам.</div>
+            </div>
+
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="minOccurrences" class="col-form-label fw-semibold">Минимум повторений слова:</label>
+              </div>
+              <div class="col-auto">
+                <select id="minOccurrences" class="form-select">
+                  <option value="1">1 раз</option>
+                  <option value="2">2 раза</option>
+                  <option value="3">3 раза</option>
+                  <option value="4">4 раза</option>
+                </select>
+              </div>
+              <div class="col-auto ms-auto">
+                <button class="btn btn-primary">Анализировать текст</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Результаты анализа -->
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="fw-semibold mb-3">Найденные незнакомые слова</h5>
+
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th>Слово</th>
+                  <th>Контексты</th>
+                  <th class="text-end">Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="word-row">
+                  <td><span class="fw-semibold">ability</span></td>
+                  <td>
+                    <div class="context-sentence">He has the <span class="highlight">ability</span> to learn quickly.</div>
+                    <div class="context-sentence">Your <span class="highlight">ability</span> to adapt is impressive.</div>
+                  </td>
+                  <td class="text-end">
+                    <button class="btn btn-success btn-sm">Знаю</button>
+                    <button class="btn btn-outline-primary btn-sm">Учить</button>
+                    <button class="btn btn-outline-danger btn-sm">Удалить</button>
+                  </td>
+                </tr>
+                <tr class="word-row">
+                  <td><span class="fw-semibold">account</span></td>
+                  <td>
+                    <div class="context-sentence">Please create an <span class="highlight">account</span> to continue.</div>
+                    <div class="context-sentence">He gave a full <span class="highlight">account</span> of the story.</div>
+                    <div class="context-sentence">The <span class="highlight">account</span> balance is low.</div>
+                  </td>
+                  <td class="text-end">
+                    <button class="btn btn-outline-primary btn-sm">Открыть</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Пейджинг -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-outline-primary btn-sm">&larr; Назад</button>
+              <span class="text-muted small">Страница 1 из 10</span>
+              <button class="btn btn-outline-primary btn-sm">Далее &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Анализ файлов -->
+      <div class="tab-pane fade" id="fileAnalyze" role="tabpanel">
+        <div class="alert alert-secondary text-center py-5 mt-3 shadow-sm">
+          Раздел <strong>«Анализ файлов»</strong> находится в разработке.
+        </div>
+      </div>
+
+      <!-- Анализ записей -->
+      <div class="tab-pane fade" id="recordAnalyze" role="tabpanel">
+        <div class="alert alert-secondary text-center py-5 mt-3 shadow-sm">
+          Раздел <strong>«Анализ записей»</strong> находится в разработке.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Модалка с деталями слова -->
+  <div class="modal fade" id="wordDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group mb-3">
+            <li class="list-group-item">
+              <div class="fw-semibold">account (noun)</div>
+              <div class="text-muted small">A record or statement of financial expenditure and receipts.</div>
+            </li>
+            <li class="list-group-item">
+              <div class="fw-semibold">account (verb)</div>
+              <div class="text-muted small">To give an explanation or justification.</div>
+            </li>
+          </ul>
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-success btn-sm">Знаю</button>
+            <button class="btn btn-outline-primary btn-sm">Учить</button>
+            <button class="btn btn-outline-danger btn-sm">Удалить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-white border-top text-center py-3 mt-5">
+    <small class="text-muted">&copy; 2025 Learn English — инструмент для анализа и изучения слов в контексте</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

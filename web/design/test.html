@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Словарь</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 80px;
+    }
+    .progress {
+      height: 6px;
+    }
+    .word-row:hover {
+      background-color: #f1f3f5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Навигация -->
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand fw-bold text-primary" href="#">Learn English</a>
+      <ul class="nav">
+        <li class="nav-item"><a class="nav-link active" href="#">Словарь</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Разбор текста</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Выход</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container mt-3">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Словарь</h2>
+      <p class="text-muted mb-1">Управляйте словами, которые вы изучаете</p>
+      <div class="fw-semibold text-secondary">Изучено: 245 / 20000</div>
+    </div>
+
+    <!-- Поиск -->
+    <div class="mb-4">
+      <input type="text" class="form-control" placeholder="Поиск слова..." />
+    </div>
+
+    <!-- Вкладки -->
+    <ul class="nav nav-tabs mb-3" id="vocabTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="unknown-tab" data-bs-toggle="tab" data-bs-target="#unknown" type="button" role="tab">Новые слова</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="learning-tab" data-bs-toggle="tab" data-bs-target="#learning" type="button" role="tab">В обучении</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="known-tab" data-bs-toggle="tab" data-bs-target="#known" type="button" role="tab">Известные слова</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Новые слова -->
+      <div class="tab-pane fade show active" id="unknown" role="tabpanel">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr><th>Слово</th><th class="text-end">Действия</th></tr>
+          </thead>
+          <tbody>
+            <tr class="word-row"><td>ability</td><td class="text-end"><button class="btn btn-success btn-sm">Знаю</button> <button class="btn btn-outline-primary btn-sm">Учить</button></td></tr>
+            <tr class="word-row"><td>accept</td><td class="text-end"><button class="btn btn-success btn-sm">Знаю</button> <button class="btn btn-outline-primary btn-sm">Учить</button></td></tr>
+            <tr class="word-row"><td>account</td><td class="text-end"><button class="btn btn-success btn-sm">Знаю</button> <button class="btn btn-outline-primary btn-sm">Учить</button></td></tr>
+            <tr class="word-row"><td>across</td><td class="text-end"><button class="btn btn-success btn-sm">Знаю</button> <button class="btn btn-outline-primary btn-sm">Учить</button></td></tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <button class="btn btn-outline-primary btn-sm">&larr; Назад</button>
+          <span class="text-muted small">Страница 1 из 500</span>
+          <button class="btn btn-outline-primary btn-sm">Далее &rarr;</button>
+        </div>
+      </div>
+
+      <!-- В обучении -->
+      <div class="tab-pane fade" id="learning" role="tabpanel">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr><th>Слово</th><th>Прогресс</th><th class="text-end">Действия</th></tr>
+          </thead>
+          <tbody>
+            <tr class="word-row">
+              <td>ability</td>
+              <td style="width: 40%;">
+                <div class="progress"><div class="progress-bar bg-success" style="width: 60%;"></div></div>
+              </td>
+              <td class="text-end"><button class="btn btn-success btn-sm">Завершить</button></td>
+            </tr>
+            <tr class="word-row">
+              <td>accept</td>
+              <td><div class="progress"><div class="progress-bar bg-info" style="width: 30%;"></div></div></td>
+              <td class="text-end"><button class="btn btn-success btn-sm">Завершить</button></td>
+            </tr>
+            <tr class="word-row">
+              <td>across</td>
+              <td><div class="progress"><div class="progress-bar bg-warning" style="width: 80%;"></div></div></td>
+              <td class="text-end"><button class="btn btn-success btn-sm">Завершить</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <button class="btn btn-outline-primary btn-sm">&larr; Назад</button>
+          <span class="text-muted small">Страница 2 из 50</span>
+          <button class="btn btn-outline-primary btn-sm">Далее &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Известные слова -->
+      <div class="tab-pane fade" id="known" role="tabpanel">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr><th>Слово</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ability</td></tr>
+            <tr><td>across</td></tr>
+            <tr><td>achieve</td></tr>
+            <tr><td>action</td></tr>
+            <tr><td>actually</td></tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <button class="btn btn-outline-primary btn-sm">&larr; Назад</button>
+          <span class="text-muted small">Страница 3 из 300</span>
+          <button class="btn btn-outline-primary btn-sm">Далее &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-top text-center py-3 mt-5">
+    <small class="text-muted">&copy; 2025 Learn English — онлайн инструмент для запоминания слов</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
